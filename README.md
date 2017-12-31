@@ -13,4 +13,4 @@ Documentação do desenvolvedor: http://dev.fluig.com/
 
 ====================================================================
 
-Obs: Projeto criados com finalidade de estudo.
+Obs: Projeto criado com finalidade de estudo.
