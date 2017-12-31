@@ -1,0 +1,25 @@
+function createDataset(fields, constraints, sortFields)  
+{  
+var codSentenca = "COLIG.FLUIG.01"; //cod sentença SQL RM
+	var codColigada = 86; // getCodColigada(constraints)
+	var codSistema  = "F"; //COD SISTEMA
+	var parametros = "CODCOLIGADA=" + codColigada;
+	var codigoServico  = ServiceManager.getService("WSCONSSQL"); //NOME DO SERVIÇO REGISTRADO NO FLUIG
+	var helperServico  = codigoServico.getBean();
+	var locatorServico = codigoServico.instantiate("com.totvs.WsConsultaSQL");        
+	var servico        = locatorServico.getRMIwsConsultaSQL();
+	var authServico    = helperServico.getBasicAuthenticatedClient(servico, "com.totvs.IwsConsultaSQL", "USER_RM", "PASS_RM");
+	var result         = authServico.realizarConsultaSQL(codSentenca, codColigada, codSistema, parametros);
+	var xmlResultados = new XML(result);
+	
+	var dataset = DatasetBuilder.newDataset();
+    //NOME DA(S) COLUNA(S)
+    dataset.addColumn("NOMEFANTASIA");
+	
+	for (var i = 0; i< xmlResultados.Resultado.length(); i++) { 
+		dataset.addRow(new Array(
+				xmlResultados.Resultado.NOMEFANTASIA[i].toString() ));
+		}
+
+    return dataset;
+}	
